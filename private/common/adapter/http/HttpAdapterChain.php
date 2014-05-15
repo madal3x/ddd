@@ -17,11 +17,17 @@ class HttpAdapterChain {
      * Stops execution when a HttpAdapter has found a route, returning true
      */
     public function execute() {
+        $routeFound = false;
         foreach ($this->adapters as $adapter) {
             /** @var $adapter HttpAdapter */
             if ($adapter->execute()) {
+                $routeFound = true;
                 break;
             }
+        }
+
+        if ( ! $routeFound) {
+            throw new \Exception("There was no route found.");
         }
     }
 }

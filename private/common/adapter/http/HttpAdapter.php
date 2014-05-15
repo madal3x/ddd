@@ -20,22 +20,32 @@ abstract class HttpAdapter {
         $route = $this->routes->getByUri($httpRequest->uri());
         $loginRoute = $this->routes->getLoginRoute();
 
-        if ( ! $route) {
-            throw new \Exception("Could not find route for uri: ".$httpRequest->uri());
-        }
+        if ($route) {
+            if ($route->requiresAuthentication() && ! $httpRequest->isUserLogged()) {
+                if ($loginRoute) {
+                    $httpResponse->redirect($loginRoute->uri());
+                } else {
+                    throw new \Exception("There is no authentication route defined.");
+                }
+            } else {
+                $className = $route->className();
+                $methodName = $route->methodName();
 
-        if ($route->requiresAuthentication() && ! $httpRequest->isUserLogged()) {
-            $httpResponse->redirect($loginRoute->uri());
-        } else {
-            $className = $route->className();
-            $methodName = $route->methodName();
-
-            $class = new $className();
-            try {
-                $class->$methodName($httpRequest, $httpResponse);
-            } catch (SecurityException $e) {
-                $httpResponse->redirect($loginRoute->uri());
+                $class = new $className();
+                try {
+                    $class->$methodName($httpRequest, $httpResponse);
+                } catch (SecurityException $e) {
+                    if ($loginRoute) {
+                        $httpResponse->redirect($loginRoute->uri());
+                    } else {
+                        throw new \Exception("There is no authentication route defined.");
+                    }
+                }
             }
+
+            return true;
         }
+
+        return false;
     }
 }
