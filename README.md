@@ -1,5 +1,7 @@
 # ddd
-Hexagonal, DDD, RabbitMQ
+Hexagonal, DDD, RabbitMQ, PHP
+
+3 sketchy bounded contexts: idaccess, report, shop
 
 Commands arrive in the application through adapters. These could translate an user interface action, a REST call or a message from the queue. In the example provided only the shop context has an user interface for the customer login. The reporting and the idaccess contexts receive input only on their message queues. 
 
