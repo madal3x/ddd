@@ -1,7 +1,7 @@
 # ddd
 I have followed a command -> command handler architecture where each context would receive as input named command objects (LoginCustomerCommand), containing just its necessary params, which would be executed in the application layer by its corresponding handler.
 
-These commands arrive in the application through adapters that could translate an user interface action, a REST call or a message from the queue. In the example provided only the shop context has an user interface for the customer login. The reporting and the idaccess contexts receive input and produce output only on their message queues. 
+These commands arrive in the application through adapters that could translate an user interface action, a REST call or a message from the queue. In the example provided only the shop context has an user interface for the customer login. The reporting and the idaccess contexts receive input only on their message queues. 
 
 The customer login user action is routed through the UIAdapter into the CustomerController which translates it to a LoginCustomerCommand for the shop context. Its handler, using a simulated synchronous request over the queue to the idaccess (authorization) context through the UserInRoleAdapter, sends a command to authorize the User into the Customer role by placing it on the idaccess' queue. The idaccess context gets the command on its queue and delegates to its AuthorizeUserCommand. If the authorization is succesful it returns an event containing an authorization token to its client.
  
