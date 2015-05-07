@@ -1,5 +1,5 @@
 # ddd
-Hexagonal, DDD, RabbitMQ, command -> command handler, dependency injection, interface seggregation
+Hexagonal, DDD, RabbitMQ
 
 Commands arrive in the application through adapters. These could translate an user interface action, a REST call or a message from the queue. In the example provided only the shop context has an user interface for the customer login. The reporting and the idaccess contexts receive input only on their message queues. 
 
