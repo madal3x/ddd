@@ -24,3 +24,4 @@ These are some of the things which were achieved, which are far less than the on
 - event store and asynchronous dispatching on the queue
 - queue authentication & authorization
 - framework for keeping the deamons alive for listeners and workers, and tuning for performance (http://supervisord.org/)
+- transactions
