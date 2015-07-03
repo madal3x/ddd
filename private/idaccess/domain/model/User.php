@@ -8,24 +8,11 @@ class User extends Entity {
     private $username;
     private $password;
 
-    protected function __constructor() {
+    public function __constructor($username, $password, $id = null) {
+        $this->setCredentials($username, $password);
+        $this->setId($id);
 
-    }
-
-    public static function initializeNew($username, $password) {
-        $user = new User();
-        $user->initializeCredentials($username, $password);
-        $user->setId();
-
-        return $user;
-    }
-
-    public static function initializeExisting($id, $username, $password) {
-        $user = new User();
-        $user->initializeCredentials($username, $password);
-        $user->setId($id);
-
-        return $user;
+        return $this;
     }
 
     public function username() {
@@ -36,7 +23,7 @@ class User extends Entity {
         return $this->password;
     }
 
-    protected function initializeCredentials($username, $password) {
+    protected function setCredentials($username, $password) {
         $this->username = $username;
         $this->password = $password;
     }

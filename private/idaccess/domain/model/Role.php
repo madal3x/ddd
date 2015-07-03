@@ -7,24 +7,11 @@ use common\domain\model\Entity;
 class Role extends Entity {
     private $name;
 
-    protected function __construct() {
+    public function __construct($name, $id = null) {
+        $this->setId($id);
+        $this->setName($name);
 
-    }
-
-    public static function initializeNew($name) {
-        $role = new Role();
-        $role->setName($name);
-        $role->setId();
-
-        return $role;
-    }
-
-    public static function initializeExisting($id, $name) {
-        $role = new Role();
-        $role->setName($name);
-        $role->setId($id);
-
-        return $role;
+        return $this;
     }
 
     public function name() {

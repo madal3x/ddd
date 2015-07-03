@@ -59,6 +59,6 @@ class MySQLUserRepository extends MySQLRepository implements UserRepository {
     }
 
     protected function map($result) {
-        return User::initializeExisting($result['id'], $result['username'], $result['password']);
+        return new User($result['username'], $result['password'], $result['id']);
     }
 }

@@ -63,6 +63,6 @@ class MySQLRoleRepository extends MySQLRepository implements RoleRepository {
     }
 
     protected function map($result) {
-        return Role::initializeExisting($result['id'], $result['role_name']);
+        return new Role($result['role_name'], $result['id']);
     }
 }
